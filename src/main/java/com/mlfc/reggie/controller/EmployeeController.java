@@ -83,12 +83,26 @@ public class EmployeeController {
 
     @PutMapping
     public Rest<String> update(HttpServletRequest request, @RequestBody Employee employee){
-        log.info("员工状态:{}",employee.toString());
+        log.info("员工信息:{}",employee.toString());
         Long empId = (Long) request.getSession().getAttribute("employee");
         employee.setUpdateTime(LocalDateTime.now());
         employee.setUpdateUser(empId);
         employeeService.updateById(employee);
-        return Rest.success("修改员工状态成功");
+        return Rest.success("修改员工信息成功");
     }
 
+    /**
+     * 根据id查询员工信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public Rest<Employee> getById(@PathVariable Long id){
+        log.info("根据id查询员工信息,id={}",id);
+        Employee employee = employeeService.getById(id);
+        if (employee!=null){
+            return Rest.success(employee);
+        }
+        return Rest.error("未找到员工信息");
+    }
 }
