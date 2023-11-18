@@ -1,6 +1,7 @@
 package com.mlfc.reggie.filter;
 
 import com.alibaba.fastjson2.JSON;
+import com.mlfc.reggie.common.BaseContext;
 import com.mlfc.reggie.common.Rest;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
@@ -37,7 +38,11 @@ public class LoginCheckFilter implements Filter {
 
         if(request.getSession().getAttribute("employee") !=null)
         {
-            log.info("已登录，放行");
+            log.info("用户id为{}",request.getSession().getAttribute("employee"));
+
+            Long empId = (Long) request.getSession().getAttribute("employee");
+            BaseContext.setCurrentId(empId);
+
             filterChain.doFilter(request,response);
             return;
         }

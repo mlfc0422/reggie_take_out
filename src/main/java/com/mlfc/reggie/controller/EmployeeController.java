@@ -54,16 +54,17 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public Rest<String> save(HttpServletRequest request, @RequestBody Employee employee){
+    public Rest<String> save(@RequestBody Employee employee){
         log.info("新增员工:{}",employee.toString());
 
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
 
-        Long empId = (Long) request.getSession().getAttribute("employee");
-        employee.setCreateUser(empId);
-        employee.setUpdateUser(empId);
+//        employee.setCreateTime(LocalDateTime.now());
+//        employee.setUpdateTime(LocalDateTime.now());
+//
+//        Long empId = (Long) request.getSession().getAttribute("employee");
+//        employee.setCreateUser(empId);
+//        employee.setUpdateUser(empId);
 
         employeeService.save(employee);
         return Rest.success("新增员工成功");
@@ -82,11 +83,16 @@ public class EmployeeController {
     }
 
     @PutMapping
-    public Rest<String> update(HttpServletRequest request, @RequestBody Employee employee){
+    public Rest<String> update(@RequestBody Employee employee){
         log.info("员工信息:{}",employee.toString());
-        Long empId = (Long) request.getSession().getAttribute("employee");
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(empId);
+
+        long id = Thread.currentThread().getId();
+        log.info("当前线程id:{}",id);
+
+//        Long empId = (Long) request.getSession().getAttribute("employee");
+//        employee.setUpdateTime(LocalDateTime.now());
+//        employee.setUpdateUser(empId);
+
         employeeService.updateById(employee);
         return Rest.success("修改员工信息成功");
     }
