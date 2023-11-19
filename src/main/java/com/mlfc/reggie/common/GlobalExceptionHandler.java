@@ -24,4 +24,10 @@ public class GlobalExceptionHandler {
         }
         return Rest.error("未知异常");
     }
+
+    @ExceptionHandler(CustomException.class)
+    public Rest<String> exceptionHandler(CustomException ex){
+        log.error(ex.getMessage());
+        return Rest.error(ex.getMessage());
+    }
 }

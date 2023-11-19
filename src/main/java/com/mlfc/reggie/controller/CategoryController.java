@@ -37,7 +37,8 @@ public class CategoryController {
     @DeleteMapping
     public Rest<String> delete(Long id){//@RequestParam("ids")未尝试的方法，现在是修改了category的js
         log.info("删除分类id为:{}",id);
-        categoryService.removeById(id);
+        categoryService.remove(id);
+//        categoryService.removeById(id);
         return Rest.success("删除成功");
     }
 
