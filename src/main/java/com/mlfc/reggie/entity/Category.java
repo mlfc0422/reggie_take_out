@@ -54,6 +54,7 @@ public class Category implements Serializable {
 
 
     //是否删除
-    private Integer isDeleted;
+//    @TableField(value="isDeleted",select=false)//select=false表示查询时不显示该字段
+//    private Integer isDeleted;
 
 }
