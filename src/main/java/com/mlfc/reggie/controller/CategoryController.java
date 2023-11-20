@@ -42,4 +42,11 @@ public class CategoryController {
         return Rest.success("删除成功");
     }
 
+    @PutMapping
+    public Rest<String> update(@RequestBody Category category){
+        log.info("修改分类:{}",category);
+        categoryService.updateById(category);
+        return Rest.success("修改成功");
+    }
+
 }
