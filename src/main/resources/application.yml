@@ -9,6 +9,7 @@ spring:
       username: root
       password: liyu422321
       type: com.alibaba.druid.pool.DruidDataSource
+
 mybatis-plus:
   configuration:
     #在映射实体或者属性时，将数据库中表名和字段名中的下划线去掉，按照驼峰命名法映射
@@ -17,3 +18,6 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: ASSIGN_ID
+
+reggie:
+  path: D:\reggieimage\
