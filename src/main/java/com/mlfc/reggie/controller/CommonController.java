@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -29,21 +28,21 @@ public class CommonController {
      * 上传文件
      */
     @PostMapping("/upload")
-    public Rest<String> upload(MultipartFile file){
+    public Rest<String> upload(MultipartFile file) {
         log.info("上传文件");
         log.info(file.toString());
 
         String originalFilename = file.getOriginalFilename();
         String substring = originalFilename.substring(originalFilename.lastIndexOf("."));
-        String fileName = UUID.randomUUID().toString()+substring;
+        String fileName = UUID.randomUUID().toString() + substring;
 
         File fileDir = new File(basePath);
-        if (!fileDir.exists()){
+        if (!fileDir.exists()) {
             fileDir.mkdirs();
         }
 
         try {
-            file.transferTo(new File(basePath+fileName));
+            file.transferTo(new File(basePath + fileName));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -54,7 +53,7 @@ public class CommonController {
      * 下载文件
      */
     @GetMapping("/download")
-    public void download(String name, HttpServletResponse response){
+    public void download(String name, HttpServletResponse response) {
         try {
             FileInputStream fileInputStream = new FileInputStream(new File(basePath + name));
             ServletOutputStream outputStream = response.getOutputStream();
@@ -63,8 +62,8 @@ public class CommonController {
             int len = 0;
             byte[] bytes = new byte[1024];
 
-            while ((len = fileInputStream.read(bytes)) != -1){
-                outputStream.write(bytes,0,len);
+            while ((len = fileInputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, len);
                 outputStream.flush();
             }
             outputStream.close();
